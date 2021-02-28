@@ -35,4 +35,14 @@ public class TicketController { //make the controller RestController
 		return list;
 	}
 	
+	public void secondApi(){
+		//sample
+	}
+	
 }
+
+
+
+
+
+
