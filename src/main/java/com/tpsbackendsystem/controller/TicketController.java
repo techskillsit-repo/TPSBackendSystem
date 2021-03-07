@@ -50,7 +50,7 @@ public class TicketController { //make the controller RestController
 		return ticketRepository.getOne(id);
 	}
 	
-	@PutMapping("/ticket/{id}")
+	@PutMapping("/ticket/{id}") //reading as path
 	public Ticket updateTicket(@PathVariable("id") Long id,@RequestBody Ticket newTicketInfo){
 		//go to DB and fetch the info of the ticket given from ID
 		Ticket ticketDB = ticketRepository.getOne(id);
@@ -61,11 +61,25 @@ public class TicketController { //make the controller RestController
 		return ticketRepository.save(ticketDB);
 	}
 	
-	@DeleteMapping("/ticket")
-	public void deleteTicket(@RequestParam("id") Long id){
+	@DeleteMapping("/ticket") //http://localhost:8787/ticket?id=2
+	public void deleteTicket(@RequestParam("id") Long id){ //reading as param
 		ticketRepository.deleteById(id);
 	}
 }
+
+
+//Executive
+/*
+ * 1. create Entity (id, name, department)
+ * 2. create Repo for Entity
+ * 3. create Controller for Entity
+ * 	3.1 GET API: single executive
+ * 	3.2 GET API: for all executives
+ *  3.3 POST API for single executive
+ *  3.4 PUT API: for updating executive info(only department update)
+ *  3.5 DELETE API: for single delete
+ */
+		
 
 
 
