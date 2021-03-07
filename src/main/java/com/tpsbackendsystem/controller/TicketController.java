@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,10 +34,35 @@ public class TicketController { //make the controller RestController
 	public Ticket insertTicket(@RequestBody Ticket ticket){
 		//using TicketRepository, insert ticket object. 
 		return ticketRepository.save(ticket);
-		
+		//3mins to go 11.58 - 11.59 - 12.00 - 12.01
 	}
 	
+	@GetMapping("/tickets")
+	public List<Ticket> getAllTickets(){
+		return ticketRepository.findAll();
+	}
+	
+	@GetMapping("/ticket/{id}")
+	public Ticket getSingleTicket(@PathVariable("id") Long id){
+		return ticketRepository.getOne(id);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
