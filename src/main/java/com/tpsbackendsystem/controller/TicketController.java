@@ -4,6 +4,9 @@ package com.tpsbackendsystem.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,8 +44,12 @@ public class TicketController { //make the controller RestController
 	}
 	
 	@GetMapping("/tickets")
-	public List<Ticket> getAllTickets(){
-		return ticketRepository.findAll();
+	public List<Ticket> getAllTickets(
+			@RequestParam(name="page",required=false, defaultValue="0") Integer page, 
+			@RequestParam(name="size",required=false,defaultValue="100") Integer size){
+		
+		Pageable pageable = PageRequest.of(page, size); 
+		return  ticketRepository.findAll(pageable).getContent();
 	}
 	
 	@GetMapping("/ticket/{id}")
