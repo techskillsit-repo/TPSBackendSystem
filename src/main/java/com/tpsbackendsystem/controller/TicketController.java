@@ -4,6 +4,7 @@ package com.tpsbackendsystem.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,14 +43,21 @@ public class TicketController { //make the controller RestController
 		 
 	}
 	
-//	Now we will work with paging that we see in google or amazon when we click next page we don't see all the items we only see a limited items on a single page so that the db doesn't breakdown when retrieving the items
-	@GetMapping("/tickets/{page}/{size}")
-	public List<Ticket> getAllTickets(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
-		Pageable pageable = PageRequest.of(page, size);
-//		Pageable is an interface.
-//		PageRequest is an abstract class which has a static method "of"
-		return ticketRepository.findAll(pageable).getContent(); //Since our return type is a List<Ticket> we need to convert the Pageable type to a List using getContent()
-//		jpaRepository provides us with a findAll() method and also findAll() method with an argument for Pageable interface
+////	Now we will work with paging that we see in google or amazon when we click next page we don't see all the items we only see a limited items on a single page so that the db doesn't breakdown when retrieving the items
+//	@GetMapping("/tickets/{page}/{size}")
+//	public List<Ticket> getAllTickets(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
+//		Pageable pageable = PageRequest.of(page, size);
+////		Pageable is an interface.
+////		PageRequest is an abstract class which has a static method "of"
+//		return ticketRepository.findAll(pageable).getContent(); //Since our return type is a List<Ticket> we need to convert the Pageable type to a List using getContent()
+////		jpaRepository provides us with a findAll() method and also findAll() method with an argument for Pageable interface
+	@GetMapping("/tickets")
+	public List<Ticket> getAllTickets(
+			@RequestParam(name="page",required=false, defaultValue="0") Integer page, 
+			@RequestParam(name="size",required=false,defaultValue="100") Integer size){
+		
+		Pageable pageable = PageRequest.of(page, size); 
+		return  ticketRepository.findAll(pageable).getContent();
 	}
 	
 	@GetMapping("/ticket/{id}")
