@@ -77,14 +77,14 @@ public class TicketController { //make the controller RestController
 
 //Executive
 /*
- * 1. create Entity (id, name, department)
- * 2. create Repo for Entity
- * 3. create Controller for Entity
- * 	3.1 GET API: single executive
- * 	3.2 GET API: for all executives
- *  3.3 POST API for single executive
- *  3.4 PUT API: for updating executive info(only department update)
- *  3.5 DELETE API: for single delete
+ * 1. create Entity (id, name, department) : Rutvij (2 mins)
+ * 2. create Repo for Entity : ExecutiveRepository : Tejal (2 mins)
+ * 3. create Controller for Entity : (ExecutiveController) : (1min)
+ * 	3.1 GET API: single executive : (Madhavi)
+ * 	3.2 GET API: for all executives (Richa)
+ *  3.3 POST API for single executive : (Deep)
+ *  3.4 PUT API: for updating executive info(only department update): Rutvij
+ *  3.5 DELETE API: for single delete (Mandar)
  */
 		
 
