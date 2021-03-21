@@ -50,7 +50,6 @@ public class ExecutiveController {
 	
 	@DeleteMapping("/executive/{id}")
 	public void deleteExecutive(@PathVariable("id") Long id){
-		executiveRepository.getOne(id);
 		executiveRepository.deleteById(id);
 		
 	}
