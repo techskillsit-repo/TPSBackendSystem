@@ -50,7 +50,9 @@ public class ExecutiveController {
 	
 	@DeleteMapping("/executive/{id}")
 	public void deleteExecutive(@PathVariable("id") Long id){
+		executiveRepository.getOne(id);
 		executiveRepository.deleteById(id);
+		
 	}
 	
 	//everyone need to implement this and push the code in your respective branches without fail.
