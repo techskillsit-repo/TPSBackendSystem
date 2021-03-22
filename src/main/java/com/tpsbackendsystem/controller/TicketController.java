@@ -16,8 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tpsbackendsystem.model.Customer;
+import com.tpsbackendsystem.model.Executive;
 import com.tpsbackendsystem.model.Ticket;
+import com.tpsbackendsystem.repository.CustomerRepository;
+import com.tpsbackendsystem.repository.ExecutiveRepository;
 import com.tpsbackendsystem.repository.TicketRepository;
+import com.tpsbackendsystem.service.TicketService;
 
 //Server Path: http://localhost:8787
 //RESTful APIs
@@ -26,6 +31,15 @@ public class TicketController { //make the controller RestController
 
 	@Autowired
 	private TicketRepository ticketRepository;
+	
+	@Autowired
+	private CustomerRepository customerRepository;
+	
+	@Autowired
+	private ExecutiveRepository executiveRepository;
+	
+	@Autowired
+	private TicketService ticketService;
 
 	/*
 	 * Take values from User and insert into DB 
@@ -36,9 +50,26 @@ public class TicketController { //make the controller RestController
 	 * }
 	 * spring will convert this JSON object into Java Object using Jackson dependency
 	 */
-	@PostMapping("/ticket")
-	public Ticket insertTicket(@RequestBody Ticket ticket){
-		//using TicketRepository, insert ticket object. 
+	
+	
+	
+	
+	
+	@PostMapping("/ticket/{cid}/{eid}")
+	public Ticket insertTicket(@PathVariable("cid") Long cid,
+							   @PathVariable("eid") Long eid, 
+							   @RequestBody Ticket ticket){
+//		fetch customer using cid
+		Customer customer = customerRepository.getOne(cid);
+		
+//		fetch executive using eid
+		Executive executive = executiveRepository.getOne(eid);
+		
+//		Attach these 2 objects to ticket
+		ticket.setCustomer(customer);
+		ticket.setExecutive(executive);
+		
+//		Save this ticket in db
 		return ticketRepository.save(ticket);
 		 
 	}
@@ -80,21 +111,40 @@ public class TicketController { //make the controller RestController
 	public void deleteTicket(@RequestParam("id") Long id){ //reading as param
 		ticketRepository.deleteById(id);
 	}
+	
+	
+	
+	
+	
+	@GetMapping("/ticket-info-id/{id}")
+	public List<Ticket> fetchTicketByCustomerID(@PathVariable("id") Long custID){
+//		Go to service
+		List<Ticket> ticket = ticketService.fetchTicketByCustomerID(custID);
+		return ticket;
+	}
+	
+	@GetMapping("/ticket-info-email/{email}")
+	public List<Ticket> fetchTicketByCustomerEmail(@PathVariable("email") String email){
+//		Go to service
+		List <Ticket> ticket = ticketService.fetchTicketByCustomerEmail(email);
+		return ticket;
+	}
+	
+	@GetMapping("/ticket-info-mobile/{mobile}")
+	public List<Ticket> fetchTicketByCustomerMobile(@PathVariable("mobile") String mobile){
+//		Go to service
+		List<Ticket> ticket = ticketService.fetchTicketByCustomerMobile(mobile);
+		return ticket;
+	}
+	
+	@GetMapping("/ticket-info-code/{code}")
+	public List<Ticket> fetchTicketByCustomerCode(@PathVariable("code") String code){
+		List <Ticket> ticket = ticketService.fetchTicketByCustomerCode(code);
+		return ticket;
+	}
+	
 }
-
-
-//Executive
-/*
- * 1. create Entity (id, name, department) : Rutvij (2 mins)
- * 2. create Repo for Entity : ExecutiveRepository : Tejal (2 mins)
- * 3. create Controller for Entity : (ExecutiveController) : (1min)
- * 	3.1 GET API: single executive : (Madhavi)
- * 	3.2 GET API: for all executives (Richa)
- *  3.3 POST API for single executive : (Deep)
- *  3.4 PUT API: for updating executive info(only department update): Rutvij
- *  3.5 DELETE API: for single delete (Mandar)
- */
-		
+	
 
 
 
