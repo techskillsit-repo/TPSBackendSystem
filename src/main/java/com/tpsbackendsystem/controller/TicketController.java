@@ -16,8 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tpsbackendsystem.model.Customer;
+import com.tpsbackendsystem.model.Executive;
 import com.tpsbackendsystem.model.Ticket;
+import com.tpsbackendsystem.repository.CustomerRepository;
+import com.tpsbackendsystem.repository.ExecutiveRepository;
 import com.tpsbackendsystem.repository.TicketRepository;
+import com.tpsbackendsystem.service.TicketService;
 
 //Server Path: http://localhost:8787
 //RESTful APIs
@@ -26,7 +31,33 @@ public class TicketController { //make the controller RestController
 
 	@Autowired
 	private TicketRepository ticketRepository;
+	@Autowired
+	private CustomerRepository customerRepository;
+	@Autowired
+	private ExecutiveRepository executiveRepository;
 
+	@Autowired
+	private TicketService ticketService;
+	
+	@PostMapping("/ticket/{cid}/{eid}")
+	public void insertTicket(
+			@PathVariable("cid") Long cid,
+			@PathVariable ("eid") Long eid,
+			@RequestBody Ticket ticket) {
+		
+		
+		Customer customer = customerRepository.getOne(cid);
+		Executive executive = executiveRepository.getOne(eid);
+		
+		ticket.setCustomer(customer);
+		ticket.setExecutive(executive);
+		
+		ticketRepository.save(ticket);
+	}
+	
+	
+	
+	
 	/*
 	 * Take values from User and insert into DB 
 	 * GET : POST : PUT : DELETE
@@ -80,7 +111,36 @@ public class TicketController { //make the controller RestController
 	public void deleteTicket(@RequestParam("id") Long id){ //reading as param
 		ticketRepository.deleteById(id);
 	}
+
+  @GetMapping("/ticket-info-id/{id}")
+    public List<Ticket> fetchTicketByCustomerID(@PathVariable("id") Long custID){
+    	List<Ticket> ticket = ticketService.fetchTicketByCustomerID(custID);
+    	return ticket;
+    }
+  
+  @GetMapping("/ticket-info-email/{email}")
+	public List<Ticket> fetchTicketByCustomerEmail(@PathVariable("email") String custEMAIL){
+	  List<Ticket> ticket =ticketService.fetchTicketByCustomerEmail(custEMAIL);
+	  return ticket;
+		
+	}
+ 
+  @GetMapping("/ticket-info-mobile/{mobile}")
+	public List<Ticket> fetchTicketByCustomerMobile(@PathVariable("mobile") String custMN){
+		List<Ticket> ticket= ticketService.fetchTicketByCustomerMobile(custMN);
+		return ticket;
+	}
+	
+	@GetMapping("/ticket-info-code/{code}")
+	public List<Ticket> fetchTicketByCustomerCode(@PathVariable("code")String custCODE){
+		List<Ticket> ticket =ticketService.fetchTicketByCustomerCode(custCODE);
+		return ticket;
+	}
+    
 }
+    
+   
+
 
 
 //Executive
