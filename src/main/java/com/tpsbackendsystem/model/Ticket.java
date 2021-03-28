@@ -1,9 +1,12 @@
 package com.tpsbackendsystem.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Ticket { // spring will create table 'ticket' in DB
@@ -12,8 +15,19 @@ public class Ticket { // spring will create table 'ticket' in DB
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id; // primary key in DB
 	private String description;
-	private String issuer;
-	//ctrl + shift + F : for formating the code.
+	private LocalDate createdDate;
+	private String actionTaken;
+	private String status; //open/close
+	
+	//who is creating this ticket: Executive
+	//which customer is this ticket for  : Customer
+	
+	@OneToOne
+	private Executive executive;
+	
+	@OneToOne
+	private Customer customer;
+
 	public Long getId() {
 		return id;
 	}
@@ -30,12 +44,48 @@ public class Ticket { // spring will create table 'ticket' in DB
 		this.description = description;
 	}
 
-	public String getIssuer() {
-		return issuer;
+	public LocalDate getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setIssuer(String issuer) {
-		this.issuer = issuer;
+	public void setCreatedDate(LocalDate createdDate) {
+		this.createdDate = createdDate;
 	}
+
+	public String getActionTaken() {
+		return actionTaken;
+	}
+
+	public void setActionTaken(String actionTaken) {
+		this.actionTaken = actionTaken;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Executive getExecutive() {
+		return executive;
+	}
+
+	public void setExecutive(Executive executive) {
+		this.executive = executive;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	
+	 
+
+	
 
 }

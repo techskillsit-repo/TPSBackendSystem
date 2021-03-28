@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tpsbackendsystem.model.Customer;
 import com.tpsbackendsystem.repository.CustomerRepository;
-import com.tpsbackendsystem.repository.CustomerRepository;
 
 @RestController
 public class CustomerController {
@@ -19,12 +18,11 @@ public class CustomerController {
 	//DELETE
 	@Autowired
 	private CustomerRepository customerRepository;
-
 	@PostMapping("/customer")
 	public void insertCustomer(@RequestBody Customer customer){
 		//insert customer in DB
 		customerRepository.save(customer);
 	}
+}	
+	
 
-
-}
