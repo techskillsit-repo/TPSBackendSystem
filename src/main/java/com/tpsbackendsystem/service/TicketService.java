@@ -18,6 +18,11 @@ public class TicketService {
 		return ticketRepository.fetchTicketByCustomerID(custID);
 		 
 	}
+
+	public List<Ticket> fetchTicketByCustomerEmail(String email) {
+		 
+		return ticketRepository.fetchTicketByCustomerEmail(email);
+	}
 	
 	 
 

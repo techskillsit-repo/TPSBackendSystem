@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tpsbackendsystem.dto.TicketDto;
 import com.tpsbackendsystem.model.Customer;
 import com.tpsbackendsystem.model.Executive;
 import com.tpsbackendsystem.model.Ticket;
@@ -111,15 +112,48 @@ public class TicketController { //make the controller RestController
 	
 	//given customer ID or email or mobile or code return all tickets
 	@GetMapping("/ticket-info-id/{id}")
-	public List<Ticket> fetchTicketByCustomerID(@PathVariable("id") Long custID){
+	public List<TicketDto> fetchTicketByCustomerID(@PathVariable("id") Long custID){
 		//go to service 
-		List<Ticket> ticket = ticketService.fetchTicketByCustomerID(custID);
-		return ticket;
+		List<Ticket> listTicket = ticketService.fetchTicketByCustomerID(custID);
+		List<TicketDto> listDto = new ArrayList<>();
+		//iterate - convert - add
+		
+		for(Ticket t   : listTicket){ //iterate 
+			TicketDto dto = new TicketDto(); 
+			dto.setId(t.getId());    //conversion
+			dto.setDescription(t.getDescription());
+			dto.setActionTaken(t.getActionTaken());
+			dto.setCreatedDate(t.getCreatedDate());
+			dto.setStatus(t.getStatus());
+			dto.setExecutiveName(t.getExecutive().getName());
+			dto.setCustomerName(t.getCustomer().getName());
+		//	dto.setCustomerEmail(t.getCustomer().getEmail());
+			listDto.add(dto); //add
+		}
+		
+		return listDto;
 	}
 	
 	@GetMapping("/ticket-info-email/{email}")
-	public void fetchTicketByCustomerEmail(){
-		//todo
+	public List<TicketDto> fetchTicketByCustomerEmail(@PathVariable("email") String email){
+		List<Ticket> listTicket = ticketService.fetchTicketByCustomerEmail(email);
+		List<TicketDto> listDto = new ArrayList<>();
+		//iterate - convert - add
+		
+		for(Ticket t   : listTicket){ //iterate 
+			TicketDto dto = new TicketDto(); 
+			dto.setId(t.getId());    //conversion
+			dto.setDescription(t.getDescription());
+			dto.setActionTaken(t.getActionTaken());
+			dto.setCreatedDate(t.getCreatedDate());
+			dto.setStatus(t.getStatus());
+		//	dto.setExecutiveName(t.getExecutive().getName());
+			dto.setCustomerName(t.getCustomer().getName());
+			dto.setCustomerEmail(t.getCustomer().getEmail());
+			listDto.add(dto); //add
+		}
+		
+		return listDto;
 	}
 	
 	@GetMapping("/ticket-info-mobile/{mobile}")
