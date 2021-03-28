@@ -1,6 +1,7 @@
 package com.tpsbackendsystem.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,11 @@ public class TicketService {
 
 	public List<Ticket> fetchTicketByCustomerEmail(String email) {
 		 
-		return ticketRepository.fetchTicketByCustomerEmail(email);
+		List<Ticket> listTickets =  ticketRepository.fetchTicketByCustomerEmail(email);
+		listTickets = listTickets.stream()
+						.filter(t-> t.getStatus().equals("open"))
+						.collect(Collectors.toList());
+		return listTickets;
 	}
 	
 	 

@@ -2,6 +2,7 @@ package com.tpsbackendsystem.controller;
 
  import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -118,7 +119,7 @@ public class TicketController { //make the controller RestController
 		List<TicketDto> listDto = new ArrayList<>();
 		//iterate - convert - add
 		
-		for(Ticket t   : listTicket){ //iterate 
+		listTicket.stream().forEach(t -> {
 			TicketDto dto = new TicketDto(); 
 			dto.setId(t.getId());    //conversion
 			dto.setDescription(t.getDescription());
@@ -129,7 +130,20 @@ public class TicketController { //make the controller RestController
 			dto.setCustomerName(t.getCustomer().getName());
 		//	dto.setCustomerEmail(t.getCustomer().getEmail());
 			listDto.add(dto); //add
-		}
+		});
+		
+//		for(Ticket t   : listTicket){ //iterate 
+//			TicketDto dto = new TicketDto(); 
+//			dto.setId(t.getId());    //conversion
+//			dto.setDescription(t.getDescription());
+//			dto.setActionTaken(t.getActionTaken());
+//			dto.setCreatedDate(t.getCreatedDate());
+//			dto.setStatus(t.getStatus());
+//			dto.setExecutiveName(t.getExecutive().getName());
+//			dto.setCustomerName(t.getCustomer().getName());
+//		//	dto.setCustomerEmail(t.getCustomer().getEmail());
+//			listDto.add(dto); //add
+//		}
 		
 		return listDto;
 	}
@@ -152,6 +166,7 @@ public class TicketController { //make the controller RestController
 			dto.setCustomerEmail(t.getCustomer().getEmail());
 			listDto.add(dto); //add
 		}
+		
 		
 		return listDto;
 	}
