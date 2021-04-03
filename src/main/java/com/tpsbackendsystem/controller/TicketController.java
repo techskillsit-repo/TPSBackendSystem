@@ -2,6 +2,7 @@ package com.tpsbackendsystem.controller;
 
  import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tpsbackendsystem.dto.TicketDto;
 import com.tpsbackendsystem.model.Customer;
 import com.tpsbackendsystem.model.Executive;
 import com.tpsbackendsystem.model.Ticket;
@@ -117,30 +119,68 @@ public class TicketController { //make the controller RestController
 	
 	
 	@GetMapping("/ticket-info-id/{id}")
-	public List<Ticket> fetchTicketByCustomerID(@PathVariable("id") Long custID){
+	public List<TicketDto> fetchTicketByCustomerID(@PathVariable("id") Long custID){
 //		Go to service
-		List<Ticket> ticket = ticketService.fetchTicketByCustomerID(custID);
-		return ticket;
+		List<Ticket> listTicket = ticketService.fetchTicketByCustomerID(custID);
+//		Creating a listDTo of type TicketDto
+		List<TicketDto> listDto = new ArrayList<>();
+//		Iterate- convert - add
+		listTicket.stream().forEach(t -> {
+			TicketDto ticketDto = new TicketDto(t.getId(), t.getDescription(), t.getCreatedDate(), t.getActionTaken(), t.getStatus(), t.getCustomer().getName(), null, t.getExecutive().getName(), null, null);
+//			add
+			listDto.add(ticketDto);
+			
+		});
+
+		return listDto;
 	}
 	
 	@GetMapping("/ticket-info-email/{email}")
-	public List<Ticket> fetchTicketByCustomerEmail(@PathVariable("email") String email){
+	public List<TicketDto> fetchTicketByCustomerEmail(@PathVariable("email") String email){
 //		Go to service
-		List <Ticket> ticket = ticketService.fetchTicketByCustomerEmail(email);
-		return ticket;
+		List <Ticket> listTicket = ticketService.fetchTicketByCustomerEmail(email);
+//		Creating a listDTo of type TicketDto
+		List<TicketDto> listDto = new ArrayList<>();
+		
+		listTicket.stream().forEach(t -> {
+			TicketDto ticketDto = new TicketDto(t.getId(), t.getDescription(), t.getCreatedDate(), t.getActionTaken(), t.getStatus(), t.getCustomer().getName(), t.getCustomer().getEmail(), t.getExecutive().getName(), null, null);
+			listDto.add(ticketDto);
+			
+		});
+
+		return listDto;
 	}
 	
 	@GetMapping("/ticket-info-mobile/{mobile}")
-	public List<Ticket> fetchTicketByCustomerMobile(@PathVariable("mobile") String mobile){
+	public List<TicketDto> fetchTicketByCustomerMobile(@PathVariable("mobile") String mobile){
 //		Go to service
-		List<Ticket> ticket = ticketService.fetchTicketByCustomerMobile(mobile);
-		return ticket;
+		List<Ticket> listTicket = ticketService.fetchTicketByCustomerMobile(mobile);
+//		Creating a listDTo of type TicketDto
+		List<TicketDto> listDto = new ArrayList<>();
+		
+		listTicket.stream().forEach(t -> {
+//			convert
+			TicketDto ticketDto = new TicketDto(t.getId(), t.getDescription(), t.getCreatedDate(), t.getActionTaken(), t.getStatus(), t.getCustomer().getName(), null, t.getExecutive().getName(), t.getCustomer().getMobile(), null);
+//			add
+			listDto.add(ticketDto);
+		});
+		
+		return listDto;
 	}
 	
 	@GetMapping("/ticket-info-code/{code}")
-	public List<Ticket> fetchTicketByCustomerCode(@PathVariable("code") String code){
-		List <Ticket> ticket = ticketService.fetchTicketByCustomerCode(code);
-		return ticket;
+	public List<TicketDto> fetchTicketByCustomerCode(@PathVariable("code") String code){
+		List <Ticket> listTicket = ticketService.fetchTicketByCustomerCode(code);
+//		Creating a listDTo of type TicketDto
+		List<TicketDto> listDto = new ArrayList<>();
+		
+		listTicket.stream().forEach(t -> {
+//			convert
+			TicketDto ticketDto = new TicketDto(t.getId(), t.getDescription(), t.getCreatedDate(), t.getActionTaken(), t.getStatus(), t.getCustomer().getName(), null, t.getExecutive().getName(), null, t.getCustomer().getCustomerCode());
+			listDto.add(ticketDto);
+		});
+		
+		return listDto;
 	}
 	
 }
