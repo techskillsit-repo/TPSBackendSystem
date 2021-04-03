@@ -37,7 +37,7 @@ public class ExecutiveController {
 		return executiveRepository.findAll(pageable).getContent();
 	}
 
-	@GetMapping("/executive")
+	@GetMapping("/executive/{id}")
 	public Executive getSingleExecutive(@PathVariable("id") Long id) {
 		return executiveRepository.getOne(id);
 	}

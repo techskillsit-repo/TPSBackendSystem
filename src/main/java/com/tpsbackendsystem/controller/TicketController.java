@@ -3,8 +3,9 @@ package com.tpsbackendsystem.controller;
  import java.util.ArrayList;
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tpsbackendsystem.dto.Ticketdto;
 import com.tpsbackendsystem.model.Customer;
 import com.tpsbackendsystem.model.Executive;
 import com.tpsbackendsystem.model.Ticket;
@@ -113,28 +115,106 @@ public class TicketController { //make the controller RestController
 	}
 
   @GetMapping("/ticket-info-id/{id}")
-    public List<Ticket> fetchTicketByCustomerID(@PathVariable("id") Long custID){
-    	List<Ticket> ticket = ticketService.fetchTicketByCustomerID(custID);
-    	return ticket;
+    public List<Ticketdto> fetchTicketByCustomerID(@PathVariable("id") Long custID){
+    	List<Ticket>  listTicket = ticketService.fetchTicketByCustomerID(custID);
+    	List<Ticketdto> listDto = new ArrayList<>();
+    	
+    	//iterate -convert -add
+    	
+    	
+    	listTicket.stream().forEach(t ->{
+    		
+    		Ticketdto dto = new Ticketdto();
+    		dto.setId(t.getId());
+    		dto.setDescription(t.getDescription());
+    		dto.setActionTaken(t.getActionTaken());
+    		dto.setCreatedDate(t.getCreatedDate());
+    		dto.setStatus(t.getStatus());
+    		dto.setExecutiveName(t.getExecutive().getName());
+    	//	dto.setCustomerName(t.getCustomer().getName());
+    		dto.setCustomerEmail(t.getCustomer().getEmail());
+    		listDto.add(dto);
+    	});
+//    	for (Ticket t : listTicket) {
+//    		Ticketdto dto = new Ticketdto();
+//    		dto.setId(t.getId());
+//    		dto.setDescription(t.getDescription());
+//    		dto.setActionTaken(t.getActionTaken());
+//    		dto.setCreatedDate(t.getCreatedDate());
+//    		dto.setStatus(t.getStatus());
+//    		dto.setExecutiveName(t.getExecutive().getName());
+//    	//	dto.setCustomerName(t.getCustomer().getName());
+//    		dto.setCustomerEmail(t.getCustomer().getEmail());
+//    		listDto.add(dto);
+//    		
+//    	}
+    	return listDto;
     }
   
   @GetMapping("/ticket-info-email/{email}")
-	public List<Ticket> fetchTicketByCustomerEmail(@PathVariable("email") String custEMAIL){
-	  List<Ticket> ticket =ticketService.fetchTicketByCustomerEmail(custEMAIL);
-	  return ticket;
+	public List<Ticketdto> fetchTicketByCustomerEmail(@PathVariable("email") String custEMAIL){
+	  List<Ticket> listTicket =ticketService.fetchTicketByCustomerEmail(custEMAIL);
+	  List<Ticketdto> listDto = new ArrayList<>();
+
+	  for (Ticket t : listTicket) {
+  		Ticketdto dto = new Ticketdto();
+  		dto.setId(t.getId());
+  		dto.setDescription(t.getDescription());
+  		dto.setActionTaken(t.getActionTaken());
+  		dto.setCreatedDate(t.getCreatedDate());
+  		dto.setStatus(t.getStatus());
+  		dto.setExecutiveName(t.getExecutive().getName());
+  	    dto.setCustomerName(t.getCustomer().getName());
+  		//dto.setCustomerEmail(t.getCustomer().getEmail());
+  		listDto.add(dto);
+  		
+  	}
+	  
+	  return listDto;
 		
 	}
  
   @GetMapping("/ticket-info-mobile/{mobile}")
-	public List<Ticket> fetchTicketByCustomerMobile(@PathVariable("mobile") String custMN){
-		List<Ticket> ticket= ticketService.fetchTicketByCustomerMobile(custMN);
-		return ticket;
+	public List<Ticketdto> fetchTicketByCustomerMobile(@PathVariable("mobile") String custMN){
+		List<Ticket> listTicket= ticketService.fetchTicketByCustomerMobile(custMN);
+		List<Ticketdto> listDto =  new ArrayList<>();
+		
+		listTicket.stream().forEach(t-> {
+			Ticketdto dto = new Ticketdto();
+			dto.setId(t.getId());
+			dto.setDescription(t.getDescription());
+			dto.setActionTaken(t.getActionTaken());
+			dto.setCreatedDate(t.getCreatedDate());
+			dto.setStatus(t.getStatus());
+			dto.setExecutiveName(t.getExecutive().getName());
+			dto.setCustomerName(t.getCustomer().getName());
+			dto.setCustomerEmail(t.getCustomer().getEmail());
+			
+			listDto.add(dto);
+		});
+		return listDto;
 	}
 	
 	@GetMapping("/ticket-info-code/{code}")
-	public List<Ticket> fetchTicketByCustomerCode(@PathVariable("code")String custCODE){
-		List<Ticket> ticket =ticketService.fetchTicketByCustomerCode(custCODE);
-		return ticket;
+	public List<Ticketdto> fetchTicketByCustomerCode(@PathVariable("code")String custCODE){
+		List<Ticket> listTicket =ticketService.fetchTicketByCustomerCode(custCODE);
+		List <Ticketdto> listDto = new ArrayList<>();
+		
+		listTicket.stream().forEach(t->{
+			Ticketdto dto = new Ticketdto();
+			
+			dto.setId(t.getId());
+			dto.setDescription(t.getDescription());
+			dto.setActionTaken(t.getActionTaken());
+			dto.setCreatedDate(t.getCreatedDate());
+			dto.setStatus(t.getStatus());
+			dto.setExecutiveName(t.getExecutive().getName());
+			dto.setCustomerName(t.getCustomer().getName());
+			dto.setCustomerEmail(t.getCustomer().getEmail());
+			
+			listDto.add(dto);
+		});
+		return listDto;
 	}
     
 }
