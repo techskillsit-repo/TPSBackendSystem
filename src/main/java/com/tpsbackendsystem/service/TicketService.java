@@ -16,6 +16,7 @@ public class TicketService {
 	private TicketRepository ticketRepository;
 
 	public List<Ticket> fetchTicketByCustomerID(Long custID) {
+		
 		return ticketRepository.fetchTicketByCustomerID(custID);
 		 
 	}
@@ -30,5 +31,8 @@ public class TicketService {
 	}
 	
 	 
+	public int sum(int x, int y) {
+		return x+y;
+	}
 
 }
