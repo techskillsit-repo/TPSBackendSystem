@@ -12,8 +12,21 @@ public interface TicketRepository extends JpaRepository<Ticket, Long>{
 	@Query("select t from Ticket t join t.customer c where c.id=?1")
 	List<Ticket> fetchTicketByCustomerID(Long custID);
 
+	
+	
 	@Query("select t from Ticket t join t.customer c where c.email=?1")
-	List<Ticket> fetchTicketByCustomerEmail(String email);
+	List<Ticket> fetchTicketByCustEmail(String email);
+
+	
+	
+	@Query("select t from Ticket t join t.customer c where c.mobile=?1")
+	List<Ticket> fetchByCustMobile(String mobile);
+
+
+	@Query("select t from Ticket t join t.customer c where c.code=?1")
+	List<Ticket> fetchByCustCode(String code);
+
+	
 
 	 
  
