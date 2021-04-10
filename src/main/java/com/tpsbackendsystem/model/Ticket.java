@@ -23,6 +23,17 @@ public class Ticket { // spring will create table 'ticket' in DB
 	@OneToOne
 	private Executive executive;
 	
+	
+
+	public Ticket(Long id, String description, LocalDate createdDate, String actionTaken, String status) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.createdDate = createdDate;
+		this.actionTaken = actionTaken;
+		this.status = status;
+	}
+
 	@OneToOne
 	private Customer customer;
 

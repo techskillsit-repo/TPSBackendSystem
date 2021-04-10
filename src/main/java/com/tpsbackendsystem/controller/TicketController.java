@@ -47,14 +47,7 @@ public class TicketController { //make the controller RestController
 			@PathVariable ("eid") Long eid,
 			@RequestBody Ticket ticket) {
 		
-		
-		Customer customer = customerRepository.getOne(cid);
-		Executive executive = executiveRepository.getOne(eid);
-		
-		ticket.setCustomer(customer);
-		ticket.setExecutive(executive);
-		
-		ticketRepository.save(ticket);
+		ticketService.insertTicket(ticket);
 	}
 	
 	
@@ -72,7 +65,7 @@ public class TicketController { //make the controller RestController
 	@PostMapping("/ticket")
 	public Ticket insertTicket(@RequestBody Ticket ticket){
 		//using TicketRepository, insert ticket object. 
-		return ticketRepository.save(ticket);
+		return ticketService.insertTicket(ticket);
 		 
 	}
 	
@@ -89,29 +82,23 @@ public class TicketController { //make the controller RestController
 			@RequestParam(name="page",required=false, defaultValue="0") Integer page, 
 			@RequestParam(name="size",required=false,defaultValue="100") Integer size){
 		
-		Pageable pageable = PageRequest.of(page, size); 
-		return  ticketRepository.findAll(pageable).getContent();
+		 
+		return  ticketService.getAllTickets(page, size);
 	}
 	
 	@GetMapping("/ticket/{id}")
 	public Ticket getSingleTicket(@PathVariable("id") Long id){
-		return ticketRepository.getOne(id);
+		return ticketService.getSingleTicket(id);
 	}
 	
 	@PutMapping("/ticket/{id}") //reading as path
 	public Ticket updateTicket(@PathVariable("id") Long id,@RequestBody Ticket newTicketInfo){
-		//go to DB and fetch the info of the ticket given from ID
-		Ticket ticketDB = ticketRepository.getOne(id);
-		//update the info of ticketDB
-		ticketDB.setDescription(newTicketInfo.getDescription());
-		
-		//save updated info in DB again
-		return ticketRepository.save(ticketDB);
+		return ticketService.updateTicket(id, newTicketInfo);
 	}
 	
 	@DeleteMapping("/ticket") //http://localhost:8787/ticket?id=2
 	public void deleteTicket(@RequestParam("id") Long id){ //reading as param
-		ticketRepository.deleteById(id);
+		ticketService.deleteTicket(id);
 	}
 
   @GetMapping("/ticket-info-id/{id}")
