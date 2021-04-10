@@ -15,6 +15,14 @@ public class Executive {
 	private String name;
 	
 	private String department;
+	
+
+	public Executive(Long id, String name, String department) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.department = department;
+	}
 
 	public Long getId() {
 		return id;

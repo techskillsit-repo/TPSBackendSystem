@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tpsbackendsystem.dto.TicketDto;
@@ -43,6 +44,27 @@ public class TicketService {
 		List<Ticket> listTicket = ticketRepository.fetchTicketByCustomerCode(code);
 		listTicket = listTicket.stream().filter(t -> t.getStatus().equals("open")).collect(Collectors.toList());
 		return listTicket;
+	}
+	
+	public int sum(int x, int y) {
+		return x+y;
+	}
+
+	public List<Ticket> findAll(Pageable pageable) {
+		List<Ticket> list = ticketRepository.findAll(pageable).getContent();
+		return list;
+	}
+
+	public Ticket getOne(Long id) {
+		return ticketRepository.getOne(id);
+	}
+
+	public Ticket save(Ticket ticketDB) {
+		return ticketRepository.save(ticketDB);
+	}
+
+	public void deleteById(Long id) {
+		ticketRepository.deleteById(id);
 	}
 
 }

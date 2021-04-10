@@ -19,6 +19,16 @@ public class Customer {
 	private String customerCode;
 	
 	private String mobile;
+	
+
+	public Customer(Long id, String name, String email, String customerCode, String mobile) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.customerCode = customerCode;
+		this.mobile = mobile;
+	}
 
 	public Long getId() {
 		return id;

@@ -28,6 +28,22 @@ public class Ticket { // spring will create table 'ticket' in DB
 	
 	@OneToOne
 	private Customer customer; // This is the relationship between Customer and Ticket models. It is one to one
+	
+	
+	
+
+	public Ticket() {
+		super();
+	}
+
+	public Ticket(Long id, String description, LocalDate createdDate, String actionTaken, String status) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.createdDate = createdDate;
+		this.actionTaken = actionTaken;
+		this.status = status;
+	}
 
 	public Long getId() {
 		return id;

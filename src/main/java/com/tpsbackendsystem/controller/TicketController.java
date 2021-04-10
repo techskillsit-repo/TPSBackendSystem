@@ -24,24 +24,23 @@ import com.tpsbackendsystem.model.Ticket;
 import com.tpsbackendsystem.repository.CustomerRepository;
 import com.tpsbackendsystem.repository.ExecutiveRepository;
 import com.tpsbackendsystem.repository.TicketRepository;
+import com.tpsbackendsystem.service.CustomerService;
+import com.tpsbackendsystem.service.ExecutiveService;
 import com.tpsbackendsystem.service.TicketService;
 
 //Server Path: http://localhost:8787
 //RESTful APIs
 @RestController
 public class TicketController { //make the controller RestController
-
-	@Autowired
-	private TicketRepository ticketRepository;
-	
-	@Autowired
-	private CustomerRepository customerRepository;
-	
-	@Autowired
-	private ExecutiveRepository executiveRepository;
 	
 	@Autowired
 	private TicketService ticketService;
+	
+	@Autowired
+	private CustomerService customerService;
+	
+	@Autowired
+	private ExecutiveService executiveService;
 
 	/*
 	 * Take values from User and insert into DB 
@@ -62,17 +61,17 @@ public class TicketController { //make the controller RestController
 							   @PathVariable("eid") Long eid, 
 							   @RequestBody Ticket ticket){
 //		fetch customer using cid
-		Customer customer = customerRepository.getOne(cid);
+		Customer customer = customerService.getOne(cid);
 		
 //		fetch executive using eid
-		Executive executive = executiveRepository.getOne(eid);
+		Executive executive = executiveService.getOne(eid);
 		
 //		Attach these 2 objects to ticket
 		ticket.setCustomer(customer);
 		ticket.setExecutive(executive);
 		
 //		Save this ticket in db
-		return ticketRepository.save(ticket);
+		return ticketService.save(ticket);
 		 
 	}
 	
@@ -90,28 +89,28 @@ public class TicketController { //make the controller RestController
 			@RequestParam(name="size",required=false,defaultValue="100") Integer size){
 		
 		Pageable pageable = PageRequest.of(page, size); 
-		return  ticketRepository.findAll(pageable).getContent();
+		return ticketService.findAll(pageable);
 	}
 	
 	@GetMapping("/ticket/{id}")
 	public Ticket getSingleTicket(@PathVariable("id") Long id){
-		return ticketRepository.getOne(id);
+		return ticketService.getOne(id);
 	}
 	
 	@PutMapping("/ticket/{id}") //reading as path
 	public Ticket updateTicket(@PathVariable("id") Long id,@RequestBody Ticket newTicketInfo){
 		//go to DB and fetch the info of the ticket given from ID
-		Ticket ticketDB = ticketRepository.getOne(id);
+		Ticket ticketDB = ticketService.getOne(id);
 		//update the info of ticketDB
 		ticketDB.setDescription(newTicketInfo.getDescription());
 		
 		//save updated info in DB again
-		return ticketRepository.save(ticketDB);
+		return ticketService.save(ticketDB);
 	}
 	
 	@DeleteMapping("/ticket") //http://localhost:8787/ticket?id=2
 	public void deleteTicket(@RequestParam("id") Long id){ //reading as param
-		ticketRepository.deleteById(id);
+		ticketService.deleteById(id);
 	}
 	
 	
