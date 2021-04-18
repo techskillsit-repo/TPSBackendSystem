@@ -23,7 +23,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long>{
 	List<Ticket> fetchByCustMobile(String mobile);
 
 
-	@Query("select t from Ticket t join t.customer c where c.code=?1")
+	@Query("select t from Ticket t join t.customer c where c.customerCode=?1")
 	List<Ticket> fetchByCustCode(String code);
 
 	

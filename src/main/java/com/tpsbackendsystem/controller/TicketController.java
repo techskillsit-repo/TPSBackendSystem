@@ -1,12 +1,8 @@
 package com.tpsbackendsystem.controller;
 
  import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -88,12 +84,12 @@ public class TicketController { //make the controller RestController
 			@RequestParam(name="size",required=false,defaultValue="100") Integer size){
 		
 		Pageable pageable = PageRequest.of(page, size); 
-		return  ticketRepository.findAll(pageable).getContent();
+		return  ticketService.findAll(pageable);
 	}
 	
 	@GetMapping("/ticket/{id}")
 	public Ticket getSingleTicket(@PathVariable("id") Long id){
-		return ticketRepository.getOne(id);
+		return ticketService.getOne(id);
 	}
 	
 	@PutMapping("/ticket/{id}") //reading as path
@@ -104,7 +100,7 @@ public class TicketController { //make the controller RestController
 		ticketDB.setDescription(newTicketInfo.getDescription());
 		
 		//save updated info in DB again
-		return ticketRepository.save(ticketDB);
+		return ticketService.save(ticketDB);
 	}
 	
 	@DeleteMapping("/ticket") //http://localhost:8787/ticket?id=2

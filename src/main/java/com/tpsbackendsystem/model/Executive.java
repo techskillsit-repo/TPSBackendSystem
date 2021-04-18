@@ -41,5 +41,13 @@ public class Executive {
 	
 	}
 
+	public Executive(Long id, String name, String department) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.department = department;
+	}
+	
+
 }
 	
