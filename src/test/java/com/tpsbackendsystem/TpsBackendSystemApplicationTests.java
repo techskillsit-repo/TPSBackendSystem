@@ -1,12 +1,5 @@
 package com.tpsbackendsystem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,19 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.tpsbackendsystem.model.Ticket;
-<<<<<<< HEAD
 import com.tpsbackendsystem.repository.TicketRepository;
 import com.tpsbackendsystem.service.TicketService;
-=======
-import com.tpsbackendsystem.service.TicketService;
 
 
->>>>>>> 4c5a94ffe71676847ecd005b2cac88afb512db11
+ 
 @SpringBootTest
 class TpsBackendSystemApplicationTests {
 
 	@Autowired
-<<<<<<< HEAD
+ 
 	private TicketService ticketService; 
 	
 	@Test
@@ -40,11 +30,7 @@ class TpsBackendSystemApplicationTests {
 		assertEquals(2, 2);
 	}
 	
-	@Test
-	void testSum() {
-		assertEquals(7, ticketService.sum(4, 3));
-		assertNotEquals(8, ticketService.sum(4, 3));
-	}
+ 
 	@Test
 	void testFetchTicketByCustomerEmail() {
 		TicketService ticketServiceMock = Mockito.mock(TicketService.class); 
@@ -56,17 +42,17 @@ class TpsBackendSystemApplicationTests {
 		List<Ticket> list1 = new ArrayList<>();
 		list1.add(new Ticket(3L, "something", LocalDate.now(), "referred to engineer", "open"));
 		
-		Mockito.when(tr.fetchTicketByCustomerEmail("i.hirani@techskillsit.com"))
+		Mockito.when(tr.fetchTicketByCustEmail("i.hirani@techskillsit.com"))
 		.thenReturn(list);
 		
-		Mockito.when(tr.fetchTicketByCustomerEmail("i.hirani@gmail.com"))
+		Mockito.when(tr.fetchTicketByCustEmail("i.hirani@gmail.com"))
 		.thenReturn(list1);
 		
 		 
-		assertEquals(1, ticketServiceMock.fetchTicketByCustomerEmail("i.hirani@techskillsit.com").size());
+		assertEquals(1, ticketServiceMock.fetchTicketByCustEmail("i.hirani@techskillsit.com").size());
 		//assertEquals(1, ticketServiceMock.fetchTicketByCustomerEmail("i.hirani@gmail.com").size());
 	}
-=======
+ 
 	private TicketService ticketservice;
 
 	@Test
@@ -106,6 +92,5 @@ class TpsBackendSystemApplicationTests {
 
 	}
 
-
->>>>>>> 4c5a94ffe71676847ecd005b2cac88afb512db11
+ 
 }
