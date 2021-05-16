@@ -16,6 +16,11 @@ public class Executive {
 	
 	private String department;
 
+	
+	public Executive() {
+		super();
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -40,6 +45,14 @@ public class Executive {
 		this.department = department;
 	
 	}
+
+	public Executive(Long id, String name, String department) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.department = department;
+	}
+	
 
 }
 	

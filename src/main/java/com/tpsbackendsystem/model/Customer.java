@@ -20,6 +20,11 @@ public class Customer {
 	
 	private String mobile;
 
+	
+	public Customer() {
+		super();
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -57,6 +62,15 @@ public class Customer {
 	}
 
 	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public Customer(Long id, String name, String email, String customerCode, String mobile) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.customerCode = customerCode;
 		this.mobile = mobile;
 	}
 	

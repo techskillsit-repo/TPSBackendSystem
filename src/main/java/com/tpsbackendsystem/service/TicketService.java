@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tpsbackendsystem.model.Ticket;
@@ -20,16 +21,50 @@ public class TicketService {
 		return ticketRepository.fetchTicketByCustomerID(custID);
 		 
 	}
-
-	public List<Ticket> fetchTicketByCustomerEmail(String email) {
-		 
-		List<Ticket> listTickets =  ticketRepository.fetchTicketByCustomerEmail(email);
-		listTickets = listTickets.stream()
-						.filter(t-> t.getStatus().equals("open"))
-						.collect(Collectors.toList());
-		return listTickets;
-	}
 	
+	
+	
+	public List<Ticket> fetchTicketByCustEmail(String email) {
+		return ticketRepository.fetchTicketByCustEmail(email);
+		
+	}
+
+
+
+	public List<Ticket> fetchTicketByCustMobile(String mobile ) {
+		// TODO Auto-generated method stub
+		return ticketRepository.fetchByCustMobile(mobile);
+	}
+
+
+
+	public List<Ticket> fetchTicketByCustCode(String code) {
+		// TODO Auto-generated method stub
+		return ticketRepository.fetchByCustCode(code);
+	}
+		 
+	 
+
+
+
+	public List<Ticket> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return  ticketRepository.findAll(pageable).getContent();
+	}
+
+
+
+	public Ticket getOne(Long id) {
+		// TODO Auto-generated method stub
+		return ticketRepository.getOne(id);
+	}
+
+
+
+	public Ticket save(Ticket ticketDB) {
+		// TODO Auto-generated method stub
+		return ticketRepository.save(ticketDB);
+	}
 	 
 	public int sum(int x, int y) {
 		return x+y;

@@ -16,41 +16,43 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tpsbackendsystem.model.Executive;
 import com.tpsbackendsystem.repository.ExecutiveRepository;
+import com.tpsbackendsystem.service.ExeutiveService;
 
 @RestController
 public class ExecutiveController {
 
 	@Autowired
 	private ExecutiveRepository executiveRepository;
+	private ExeutiveService executiveService;
 	
 	@PostMapping("/executive")  
 	public Executive insertExecitive(@RequestBody Executive executive){
-		return executiveRepository.save(executive);
+		return executiveService.save(executive);
 	}
 	
 	@GetMapping("/executives") 
 	public List<Executive> getAllExecutive(@RequestParam(name="page", required=false, defaultValue="0") Integer page,
 										   @RequestParam(name="size", required=false, defaultValue="100") Integer size){
 		Pageable pageable = PageRequest.of(page, size);
-		 return executiveRepository.findAll(pageable).getContent();
+		 return executiveService.findAll(pageable);
 	}
 	
 	@GetMapping("/executive/{id}")
 	public Executive getSingleExecutive(@PathVariable("id") Long id){
-		return executiveRepository.getOne(id);		
+		return executiveService.getOne(id);		
 	}
 	
 	@PutMapping("/executive/{id}")
 	public Executive editExecutive(@PathVariable("id") Long id,@RequestBody Executive executive){
 		Executive executiveDB = executiveRepository.getOne(id);
 		executiveDB.setDepartment(executive.getDepartment());
-		return executiveRepository.save(executiveDB);
+		return executiveService.save(executiveDB);
 		
 	}
 	
 	@DeleteMapping("/executive/{id}")
 	public void deleteExecutive(@PathVariable("id") Long id){
-		executiveRepository.deleteById(id);
+		executiveService.deleteById(id);
 		
 	}
 	

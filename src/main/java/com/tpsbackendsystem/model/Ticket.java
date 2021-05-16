@@ -17,6 +17,15 @@ public class Ticket { // spring will create table 'ticket' in DB
 	private String description;
 	private LocalDate createdDate;
 	private String actionTaken;
+	public Ticket(Long id, String description, LocalDate createdDate, String actionTaken, String status) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.createdDate = createdDate;
+		this.actionTaken = actionTaken;
+		this.status = status;
+	}
+
 	private String status; //open/close
 	
 	//who is creating this ticket: Executive
@@ -31,14 +40,7 @@ public class Ticket { // spring will create table 'ticket' in DB
 	public Ticket() {
 		
 	}
-	public Ticket(Long id, String description, LocalDate createdDate, String actionTaken, String status) {
-		super();
-		this.id = id;
-		this.description = description;
-		this.createdDate = createdDate;
-		this.actionTaken = actionTaken;
-		this.status = status;
-	}
+	 
 
 	public Long getId() {
 		return id;

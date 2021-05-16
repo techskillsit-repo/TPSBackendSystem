@@ -2,10 +2,8 @@ package com.tpsbackendsystem.controller;
 
  import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tpsbackendsystem.dto.TicketDto;
+import com.tpsbackendsystem.TicketDto.TicketDto;
 import com.tpsbackendsystem.model.Customer;
 import com.tpsbackendsystem.model.Executive;
 import com.tpsbackendsystem.model.Ticket;
@@ -87,12 +85,12 @@ public class TicketController { //make the controller RestController
 			@RequestParam(name="size",required=false,defaultValue="100") Integer size){
 		
 		Pageable pageable = PageRequest.of(page, size); 
-		return  ticketRepository.findAll(pageable).getContent();
+		return  ticketService.findAll(pageable);
 	}
 	
 	@GetMapping("/ticket/{id}")
 	public Ticket getSingleTicket(@PathVariable("id") Long id){
-		return ticketRepository.getOne(id);
+		return ticketService.getOne(id);
 	}
 	
 	@PutMapping("/ticket/{id}") //reading as path
@@ -103,7 +101,7 @@ public class TicketController { //make the controller RestController
 		ticketDB.setDescription(newTicketInfo.getDescription());
 		
 		//save updated info in DB again
-		return ticketRepository.save(ticketDB);
+		return ticketService.save(ticketDB);
 	}
 	
 	@DeleteMapping("/ticket") //http://localhost:8787/ticket?id=2
@@ -116,69 +114,99 @@ public class TicketController { //make the controller RestController
 	public List<TicketDto> fetchTicketByCustomerID(@PathVariable("id") Long custID){
 		//go to service 
 		List<Ticket> listTicket = ticketService.fetchTicketByCustomerID(custID);
-		List<TicketDto> listDto = new ArrayList<>();
-		//iterate - convert - add
+		List<TicketDto> listdto = new ArrayList<>();
 		
 		listTicket.stream().forEach(t -> {
-			TicketDto dto = new TicketDto(); 
-			dto.setId(t.getId());    //conversion
+			TicketDto dto = new TicketDto();
+			dto.setId(t.getId());
 			dto.setDescription(t.getDescription());
 			dto.setActionTaken(t.getActionTaken());
 			dto.setCreatedDate(t.getCreatedDate());
 			dto.setStatus(t.getStatus());
-			dto.setExecutiveName(t.getExecutive().getName());
 			dto.setCustomerName(t.getCustomer().getName());
-		//	dto.setCustomerEmail(t.getCustomer().getEmail());
-			listDto.add(dto); //add
+			dto.setCustomerEmail(t.getCustomer().getEmail());;
+			listdto.add(dto);
+			
+			
+			
 		});
 		
-//		for(Ticket t   : listTicket){ //iterate 
-//			TicketDto dto = new TicketDto(); 
-//			dto.setId(t.getId());    //conversion
-//			dto.setDescription(t.getDescription());
-//			dto.setActionTaken(t.getActionTaken());
-//			dto.setCreatedDate(t.getCreatedDate());
-//			dto.setStatus(t.getStatus());
-//			dto.setExecutiveName(t.getExecutive().getName());
-//			dto.setCustomerName(t.getCustomer().getName());
-//		//	dto.setCustomerEmail(t.getCustomer().getEmail());
-//			listDto.add(dto); //add
-//		}
+		//listdto = listdto.stream().filter(t->t.getStatus().equals("open")).collect(Collectors.toList());
+			
 		
-		return listDto;
+		return listdto;
 	}
 	
 	@GetMapping("/ticket-info-email/{email}")
-	public List<TicketDto> fetchTicketByCustomerEmail(@PathVariable("email") String email){
-		List<Ticket> listTicket = ticketService.fetchTicketByCustomerEmail(email);
-		List<TicketDto> listDto = new ArrayList<>();
-		//iterate - convert - add
+	public List<TicketDto> fetchTicketByCustEmail(@PathVariable("email") String email){
+		List<Ticket> listTicket = ticketService.fetchTicketByCustEmail(email);
+		List<TicketDto> listdto = new ArrayList<>();
 		
-		for(Ticket t   : listTicket){ //iterate 
-			TicketDto dto = new TicketDto(); 
-			dto.setId(t.getId());    //conversion
+		listTicket.stream().forEach(t -> {
+			TicketDto dto = new TicketDto();
+			dto.setId(t.getId());
 			dto.setDescription(t.getDescription());
 			dto.setActionTaken(t.getActionTaken());
 			dto.setCreatedDate(t.getCreatedDate());
 			dto.setStatus(t.getStatus());
-		//	dto.setExecutiveName(t.getExecutive().getName());
 			dto.setCustomerName(t.getCustomer().getName());
 			dto.setCustomerEmail(t.getCustomer().getEmail());
-			listDto.add(dto); //add
-		}
+			listdto.add(dto);
+			
+			
+			
+		});
 		
+		//listdto = listdto.stream().filter(t->t.getStatus().equals("open")).collect(Collectors.toList());
+			
 		
-		return listDto;
+		return listdto;
+	
 	}
 	
 	@GetMapping("/ticket-info-mobile/{mobile}")
-	public void fetchTicketByCustomerMobile(){
-		//todo
+	public void fetchTicketByCustomerMobile(@PathVariable("mobile") String mobile){
+		List<Ticket> listTicket = ticketService.fetchTicketByCustMobile(mobile);
+		List<TicketDto> listdto = new ArrayList<>();
+		
+		listTicket.stream().forEach(t -> {
+			TicketDto dto = new TicketDto();
+			dto.setId(t.getId());
+			dto.setDescription(t.getDescription());
+			dto.setActionTaken(t.getActionTaken());
+			dto.setCreatedDate(t.getCreatedDate());
+			dto.setStatus(t.getStatus());
+			dto.setCustomerName(t.getCustomer().getName());
+			dto.setCustomerEmail(t.getCustomer().getEmail());
+			listdto.add(dto);
+			
+			
+			
+		});
+		
 	}
 	
 	@GetMapping("/ticket-info-code/{code}")
-	public void fetchTicketByCustomerCode(){
+	public void fetchTicketByCustomerCode(@PathVariable("code") String code){
 		//todo
+		List<Ticket> listTicket = ticketService.fetchTicketByCustCode(code);
+		List<TicketDto> listdto = new ArrayList<>();
+		
+		listTicket.stream().forEach(t -> {
+			TicketDto dto = new TicketDto();
+			dto.setId(t.getId());
+			dto.setDescription(t.getDescription());
+			dto.setActionTaken(t.getActionTaken());
+			dto.setCreatedDate(t.getCreatedDate());
+			dto.setStatus(t.getStatus());
+			dto.setCustomerName(t.getCustomer().getName());
+			dto.setCustomerEmail(t.getCustomer().getEmail());;
+			listdto.add(dto);
+			
+			
+			
+		});
+		
 	}
 }
 

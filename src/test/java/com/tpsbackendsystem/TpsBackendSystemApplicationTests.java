@@ -6,18 +6,31 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.tpsbackendsystem.model.Ticket;
+<<<<<<< HEAD
 import com.tpsbackendsystem.repository.TicketRepository;
 import com.tpsbackendsystem.service.TicketService;
+=======
+import com.tpsbackendsystem.service.TicketService;
+
+
+>>>>>>> 4c5a94ffe71676847ecd005b2cac88afb512db11
 @SpringBootTest
 class TpsBackendSystemApplicationTests {
 
 	@Autowired
+<<<<<<< HEAD
 	private TicketService ticketService; 
 	
 	@Test
@@ -53,4 +66,46 @@ class TpsBackendSystemApplicationTests {
 		assertEquals(1, ticketServiceMock.fetchTicketByCustomerEmail("i.hirani@techskillsit.com").size());
 		//assertEquals(1, ticketServiceMock.fetchTicketByCustomerEmail("i.hirani@gmail.com").size());
 	}
+=======
+	private TicketService ticketservice;
+
+	@Test
+	void testSum() {
+		assertEquals(7, ticketservice.sum(4, 3));
+	}
+
+	@Test
+	void testFetchTicketCustomerbyemail() {
+		TicketService ticketServiceMock = Mockito.mock(TicketService.class);
+		
+		List<Ticket> list = new ArrayList<>();
+		
+		list.add(new Ticket(1L, "Something", LocalDate.now(), "engineer", "Open"));
+		list.add(new Ticket(2L, "rishi", LocalDate.now(), "resolved", "closed"));
+		
+		Mockito.when(ticketServiceMock.fetchTicketByCustEmail("Jha.rishi16@gmail")).thenReturn(list);
+		
+		
+		assertEquals(2, ticketServiceMock.fetchTicketByCustEmail("Jha.rishi16@gmail").size());
+
+	}
+	
+	@Test
+	void testFetchTicketCustomerbymobile() {
+		TicketService ticketServiceMock = Mockito.mock(TicketService.class);
+		
+		List<Ticket> list = new ArrayList<>();
+		
+		list.add(new Ticket(1L, "Something", LocalDate.now(), "engineer", "Open"));
+		list.add(new Ticket(2L, "rishi", LocalDate.now(), "resolved", "closed"));
+		
+		Mockito.when(ticketServiceMock.fetchTicketByCustMobile("9000671328")).thenReturn(list);
+		
+		
+		assertEquals(2, ticketServiceMock.fetchTicketByCustMobile("9000671328").size());
+
+	}
+
+
+>>>>>>> 4c5a94ffe71676847ecd005b2cac88afb512db11
 }

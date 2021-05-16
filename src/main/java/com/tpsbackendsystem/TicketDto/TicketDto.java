@@ -1,101 +1,63 @@
-package com.tpsbackendsystem.dto;
+package com.tpsbackendsystem.TicketDto;
 
 import java.time.LocalDate;
 
 public class TicketDto {
-	private Long id;
+	private Long id; // primary key in DB
 	private String description;
 	private LocalDate createdDate;
 	private String actionTaken;
 	private String status;
-	private String customerName;
-	private String customerEmail;
-	private String executiveName;
-
-	
-	public TicketDto(Long id, String description, LocalDate createdDate, String actionTaken, String status,
-			String customerName, String customerEmail, String executiveName) {
-		super();
-		this.id = id;
-		this.description = description;
-		this.createdDate = createdDate;
-		this.actionTaken = actionTaken;
-		this.status = status;
-		this.customerName = customerName;
-		this.customerEmail = customerEmail;
-		this.executiveName = executiveName;
-	}
-	
-	
-
-	public TicketDto() {
-		super();
-	}
-
-
-
+	private String CustomerName;
+	private String CustomerEmail;
+	private String ExecutiveName;
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 	public LocalDate getCreatedDate() {
 		return createdDate;
 	}
-
 	public void setCreatedDate(LocalDate createdDate) {
 		this.createdDate = createdDate;
 	}
-
 	public String getActionTaken() {
 		return actionTaken;
 	}
-
 	public void setActionTaken(String actionTaken) {
 		this.actionTaken = actionTaken;
 	}
-
 	public String getStatus() {
 		return status;
 	}
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 	public String getCustomerName() {
-		return customerName;
+		return CustomerName;
 	}
-
 	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
+		CustomerName = customerName;
 	}
-
 	public String getCustomerEmail() {
-		return customerEmail;
+		return CustomerEmail;
 	}
-
 	public void setCustomerEmail(String customerEmail) {
-		this.customerEmail = customerEmail;
+		CustomerEmail = customerEmail;
 	}
-
 	public String getExecutiveName() {
-		return executiveName;
+		return ExecutiveName;
 	}
-
 	public void setExecutiveName(String executiveName) {
-		this.executiveName = executiveName;
+		ExecutiveName = executiveName;
 	}
 
 }
