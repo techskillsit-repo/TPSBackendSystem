@@ -28,17 +28,16 @@ public class Ticket { // spring will create table 'ticket' in DB
 	@OneToOne
 	private Customer customer;
 
-	
-	public Ticket(Long id, String description, LocalDate createdDate, String actionTaken, String status,
-			Executive executive, Customer customer) {
+	public Ticket() {
+		
+	}
+	public Ticket(Long id, String description, LocalDate createdDate, String actionTaken, String status) {
 		super();
 		this.id = id;
 		this.description = description;
 		this.createdDate = createdDate;
 		this.actionTaken = actionTaken;
 		this.status = status;
-		this.executive = executive;
-		this.customer = customer;
 	}
 
 	public Long getId() {
