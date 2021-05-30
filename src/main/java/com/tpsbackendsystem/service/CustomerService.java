@@ -26,7 +26,7 @@ public Customer save(Customer customer) {
 
 
 
-public List<Customer> findAll(Pageable pageable) {
+public List<Customer> findAll() {
 	// TODO Auto-generated method stub
 	return customerRepository.findAll();
 }

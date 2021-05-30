@@ -27,6 +27,7 @@ public class CustomerController {
 	//DELETE
 	@Autowired
 	private CustomerRepository customerRepository;
+	@Autowired
 	private CustomerService customerservice;
 	
 	@PostMapping("/customer")
@@ -40,7 +41,7 @@ public class CustomerController {
 	public List<Customer> getAllCustomer(@RequestParam(name="page", required=false, defaultValue="0") Integer page,
 			  @RequestParam(name="size", required=false, defaultValue="100") Integer size){
 		Pageable pageable =  (Pageable) PageRequest.of(page, size);
-		return customerservice.findAll(pageable);
+		return customerservice.findAll();
 
 	}
 	

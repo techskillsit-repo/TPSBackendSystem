@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tpsbackendsystem.model.User;
+import com.tpsbackendsystem.repository.RoleRepository;
 import com.tpsbackendsystem.repository.UserRepository;
 
 @RestController
@@ -16,9 +17,12 @@ public class AuthController {
 	private UserRepository userRepository;
 	@Autowired
 	private PasswordEncoder passEncoder;
+	@Autowired
+	private RoleRepository roleRepository;
 	@PostMapping("/user")
 	public User postUser(@RequestBody User user) {
 		user.setPassword(passEncoder.encode(user.getPassword()));
+		roleRepository.saveAll(user.getRoles());
 		return userRepository.save(user);
 	}
 }
