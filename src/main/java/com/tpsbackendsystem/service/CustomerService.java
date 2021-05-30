@@ -1,9 +1,9 @@
 package com.tpsbackendsystem.service;
 
-import java.awt.print.Pageable;
-import java.util.List;
+ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tpsbackendsystem.model.Customer;

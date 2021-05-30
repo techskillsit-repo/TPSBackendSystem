@@ -25,8 +25,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// TODO Auto-generated method stub
-		super.configure(http);
+		http.authorizeRequests()
+		.antMatchers("/customers").permitAll()
+		.and()
+		.httpBasic();
+		
+		http.cors();
+		http.csrf().disable();
 	}
 	
 	@Override
@@ -36,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	private DaoAuthenticationProvider getAuthenticator() {
 		DaoAuthenticationProvider dao = new DaoAuthenticationProvider();
-		dao.setUserDetailsService(userService);
+		dao.setUserDetailsService(userService);//we write DB query 
 		dao.setPasswordEncoder(this.passEncoder);
 		return dao;
 	}
